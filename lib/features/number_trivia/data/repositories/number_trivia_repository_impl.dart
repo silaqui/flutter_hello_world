@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutterhelloworld/core/error/exception.dart';
 import 'package:flutterhelloworld/core/error/failure.dart';
-import 'package:flutterhelloworld/core/platform/network_info.dart';
+import 'package:flutterhelloworld/core/network/network_info.dart';
 import 'package:flutterhelloworld/features/number_trivia/data/datasources/number_trivia_local_data_source.dart';
 import 'package:flutterhelloworld/features/number_trivia/data/datasources/number_trivia_remote_data_source.dart';
 import 'package:flutterhelloworld/features/number_trivia/domain/entities/number_trivia.dart';
