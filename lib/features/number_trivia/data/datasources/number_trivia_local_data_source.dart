@@ -3,5 +3,5 @@ import 'package:flutterhelloworld/features/number_trivia/domain/entities/number_
 abstract class NumberTriviaLocalDataSource {
   Future<NumberTrivia> getLastNumberTrivia();
 
-  Future<void> cacheNumberTrivia();
+  Future<void> cacheNumberTrivia(NumberTrivia numberTrivia);
 }
