@@ -24,7 +24,7 @@ main() {
 
   void setUpMockHttpSuccess200(){
     when(mockHttpClient.get(any, headers: anyNamed('headers')))
-        .thenAnswer((_) async => http.Response(fixture('trivia.json'), 200));
+        .thenAnswer((_) async => http.Response(fixture("trivia.json"), 200));
   }
 
   void setUpMockHttpError404(){
@@ -35,7 +35,7 @@ main() {
   group("getConcreteNumberTrivia", () {
     final testNumber = 1;
     final testNumberTriviaModel =
-        NumberTriviaModel.fromJson(json.decode(fixture('trivia.json')));
+        NumberTriviaModel.fromJson(json.decode(fixture("trivia.json")));
 
     test('''should get preforme GET request at URL with number 
             being the endpoint and with application/json header''', () async {
@@ -71,7 +71,7 @@ main() {
 
   group("getRandomNumberTrivia", () {
     final testNumberTriviaModel =
-    NumberTriviaModel.fromJson(json.decode(fixture('trivia.json')));
+    NumberTriviaModel.fromJson(json.decode(fixture("trivia.json")));
 
     test('''should get preforme GET request at URL with number 
             being the endpoint and with application/json header''', () async {

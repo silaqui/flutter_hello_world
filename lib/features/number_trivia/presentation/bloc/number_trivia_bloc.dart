@@ -1,12 +1,16 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
+import 'package:flutterhelloworld/core/error/failure.dart';
+import 'package:flutterhelloworld/core/usecases/usecase.dart';
 import 'package:flutterhelloworld/core/util/input_converter.dart';
+import 'package:flutterhelloworld/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:flutterhelloworld/features/number_trivia/domain/usecases/get_concreate_numbeer_trivia.dart';
 import 'package:flutterhelloworld/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
-import './bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'package:dartz/dartz.dart';
+import './bloc.dart';
 
 const String SERVER_FAILURE_MESSAGE = "Server Failure";
 const String CACHE_FAILURE_MESSAGE = "Cache Failure";
@@ -41,9 +45,33 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
 
       yield* inputEither.fold((failure) async* {
         yield Error(message: INVALID_INPUT_MESSAGE);
-      }, (integer) {
-        throw UnimplementedError();
+      }, (integer) async* {
+        yield Loading();
+        yield* _eitherLoadedOrError(
+            await getConcreteNumberTrivia(Params(number: integer)));
       });
+    } else if (event is GetTriviaForRandomNumber) {
+      yield Loading();
+      yield* _eitherLoadedOrError(await getRandomNumberTrivia(NoParams()));
+    }
+  }
+
+  Stream<NumberTriviaState> _eitherLoadedOrError(
+    Either<Failure, NumberTrivia> failureOrTrivia,
+  ) async* {
+    yield failureOrTrivia.fold(
+        (failure) => Error(message: _mapFailureMessage(failure)),
+        (trivia) => Loaded(trivia: trivia));
+  }
+
+  String _mapFailureMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case ServerFailure:
+        return SERVER_FAILURE_MESSAGE;
+      case CacheFailure:
+        return CACHE_FAILURE_MESSAGE;
+      default:
+        return "Unexpected error";
     }
   }
 }
