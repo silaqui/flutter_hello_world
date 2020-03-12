@@ -19,7 +19,7 @@ main() {
 
   setUp(() {
     mockHttpClient = MockHttpClient();
-    dataSource = NumberTriviaRemoteDataSourceImpl(mockHttpClient);
+    dataSource = NumberTriviaRemoteDataSourceImpl(client: mockHttpClient);
   });
 
   void setUpMockHttpSuccess200(){
