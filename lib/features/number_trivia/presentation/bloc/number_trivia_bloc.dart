@@ -23,8 +23,8 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   final InputConverter inputConverter;
 
   NumberTriviaBloc({
-    @required concrete,
-    @required random,
+    @required GetConcreteNumberTrivia concrete,
+    @required GetRandomNumberTrivia random,
     @required this.inputConverter,
   })  : assert(concrete != null),
         assert(random != null),
